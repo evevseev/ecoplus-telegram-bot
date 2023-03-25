@@ -1,21 +1,21 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, ReplyKeyboardMarkup
-from classes import actions, action_cb, days_offsetting_cb
+from models.classes import actions, action_cb, days_offsetting_cb
 from models.unit import get_unit_model
 
 
-def getDaysKeyboard(days: int):
+def get_days_keyboard(days: int):
     if days > 0:
         return InlineKeyboardMarkup().row(
-            InlineKeyboardButton('<--', callback_data=days_offsetting_cb.new(action='before', days=days)),
-            InlineKeyboardButton('-->', callback_data=days_offsetting_cb.new(action='after', days=days))).row(
-            InlineKeyboardButton('Сегодня', callback_data=days_offsetting_cb.new(action='today', days=days))
+            InlineKeyboardButton('⬅️', callback_data=days_offsetting_cb.new(action='before', days=days)),
+            InlineKeyboardButton('➡️', callback_data=days_offsetting_cb.new(action='after', days=days))).row(
+            InlineKeyboardButton('🔘', callback_data=days_offsetting_cb.new(action='today', days=days))
         )
     else:
         return InlineKeyboardMarkup().row(
-            InlineKeyboardButton('<--', callback_data=days_offsetting_cb.new(action='before', days=days)))
+            InlineKeyboardButton('⬅️', callback_data=days_offsetting_cb.new(action='before', days=days)))
 
 
-def getUnitKeyboard(unit):
+def get_unit_keyboard(unit):
     admin_link = f"https://my.busy-fly.com/unit/scooter-list/{unit['id']}/view"
 
     unblock = InlineKeyboardButton(actions["tech_mode_on"].short_name,
@@ -65,5 +65,5 @@ def getUnitKeyboard(unit):
     return buttons
 
 
-def getMainMenu():
-    return ReplyKeyboardMarkup(resize_keyboard=True).add("Активных заказов").add("Выручка за день")
+def get_main_menu():
+    return ReplyKeyboardMarkup(resize_keyboard=True).add("🟢 Активных заказов").add("💵 Выручка за день")
